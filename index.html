@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WriteMate - Handwritten Answers</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Shadows+Into+Light&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">✍️ WriteMate</div>
+    <p>Turn your questions into beautiful handwritten answers</p>
+</header>
+
+
+<main>
+
+    <!-- INPUT SECTION -->
+    <section class="input-card">
+
+        <h2>📝 Create Your Answer</h2>
+
+        <label for="question">Question / Topic</label>
+
+        <textarea
+            id="question"
+            placeholder="Example: Explain photosynthesis..."
+        ></textarea>
+
+
+        <label>Select Marks</label>
+
+        <div class="marks">
+
+            <button onclick="selectMarks(2)" id="mark2">
+                2 Marks
+            </button>
+
+            <button onclick="selectMarks(5)" id="mark5">
+                5 Marks
+            </button>
+
+            <button onclick="selectMarks(10)" id="mark10">
+                10 Marks
+            </button>
+
+            <button onclick="selectMarks(15)" id="mark15">
+                15 Marks
+            </button>
+
+        </div>
+
+
+        <label for="subject">Subject</label>
+
+        <select id="subject">
+
+            <option>Other</option>
+            <option>Mathematics</option>
+            <option>Physics</option>
+            <option>Chemistry</option>
+            <option>Biology</option>
+            <option>Computer Science</option>
+            <option>English</option>
+            <option>Mechanical Engineering</option>
+
+        </select>
+
+
+        <label for="pageCount">Number of Pages</label>
+
+        <select id="pageCount">
+
+            <option value="1">📄 1 Page</option>
+            <option value="2">📄 2 Pages</option>
+            <option value="3">📄 3 Pages</option>
+            <option value="4">📄 4 Pages</option>
+            <option value="5">📄 5 Pages</option>
+
+        </select>
+
+
+        <label for="writingStyle">Choose Handwriting</label>
+
+        <select id="writingStyle">
+
+            <option value="neat">✍️ Very Neat</option>
+            <option value="natural">✍️ Natural Student</option>
+            <option value="clean">✍️ Clean & Stylish</option>
+            <option value="exam">✍️ Simple Exam Writing</option>
+            <option value="cursive">✍️ Cursive Student</option>
+
+        </select>
+
+
+        <label for="inkColor">Ink Color</label>
+
+        <select id="inkColor">
+
+            <option value="blue">🔵 Blue Ink</option>
+            <option value="black">⚫ Black Ink</option>
+
+        </select>
+
+
+        <label class="checkbox-label">
+
+            <input type="checkbox" id="addDiagram" checked>
+
+            Add diagrams when useful
+
+        </label>
+
+
+        <button class="generate" onclick="generateAnswer()">
+            ✨ Generate Handwritten Answer
+        </button>
+
+    </section>
+
+
+    <!-- OUTPUT SECTION -->
+    <section class="preview-card">
+
+        <div class="preview-title">
+
+            <div>
+                <h2>📖 Your Handwritten Answer</h2>
+                <p id="pageInfo">No answer generated yet</p>
+            </div>
+
+        </div>
+
+
+        <div id="paperContainer">
+
+            <div class="empty">
+
+                <div class="empty-icon">✍️</div>
+
+                <h3>Your handwritten answer will appear here</h3>
+
+                <p>
+                    Enter your question, select marks and generate your answer.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    Made with ❤️ for students
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
