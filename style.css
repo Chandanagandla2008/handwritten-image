@@ -1,516 +1,326 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #fff6fb, #f3f5ff);
-    min-height: 100vh;
-    color: #29283d;
+  margin: 0;
+  background: #f4f7fb;
+  color: #172033;
+  font-family: Arial, sans-serif;
 }
 
-
-/* HEADER */
-
-header {
-    background: white;
-    text-align: center;
-    padding: 25px 20px;
-    border-bottom: 1px solid #eeeeee;
+.header {
+  height: 70px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 7%;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .logo {
-    font-size: 32px;
-    font-weight: 700;
-    color: #6256e8;
+  font-size: 25px;
+  font-weight: bold;
+  color: #4f46e5;
 }
 
-header p {
-    color: #777;
-    margin-top: 5px;
+.saved-btn {
+  border: none;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 11px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-
-/* MAIN */
-
-main {
-    width: 94%;
-    max-width: 1400px;
-    margin: 35px auto;
-
-    display: grid;
-    grid-template-columns: 390px 1fr;
-
-    gap: 30px;
+.container {
+  max-width: 1050px;
+  margin: auto;
+  padding: 40px 20px;
 }
 
-
-/* CARDS */
-
-.input-card,
-.preview-card {
-    background: white;
-
-    border-radius: 22px;
-
-    padding: 28px;
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.07);
+.hero {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.input-card h2 {
-    margin-bottom: 25px;
+.hero h1 {
+  font-size: 38px;
+  margin-bottom: 12px;
 }
 
-
-/* LABELS */
-
-label {
-    display: block;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    margin-top: 18px;
-    margin-bottom: 8px;
+.hero p {
+  color: #64748b;
+  font-size: 17px;
 }
 
+.card {
+  background: white;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+}
 
-/* TEXTAREA */
+.label {
+  display: block;
+  margin-bottom: 9px;
+  margin-top: 18px;
+  font-weight: bold;
+}
 
 textarea {
-    width: 100%;
-    height: 125px;
-
-    resize: vertical;
-
-    border: 1px solid #ddd;
-    border-radius: 12px;
-
-    padding: 14px;
-
-    font-family: "Poppins", sans-serif;
-
-    font-size: 14px;
-
-    outline: none;
+  width: 100%;
+  min-height: 130px;
+  padding: 15px;
+  border: 1px solid #d7dce5;
+  border-radius: 12px;
+  resize: vertical;
+  font-size: 16px;
+  outline: none;
 }
 
-textarea:focus {
-    border-color: #6a60ec;
+textarea:focus,
+select:focus {
+  border-color: #6366f1;
 }
 
-
-/* SELECT */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
 
 select {
-    width: 100%;
-
-    padding: 12px 13px;
-
-    border-radius: 10px;
-
-    border: 1px solid #ddd;
-
-    background: white;
-
-    font-family: "Poppins", sans-serif;
-
-    font-size: 14px;
-
-    cursor: pointer;
-
-    outline: none;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d7dce5;
+  border-radius: 10px;
+  background: white;
+  font-size: 15px;
 }
 
-
-/* MARKS */
-
-.marks {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 10px;
+.styles {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.marks button {
-    padding: 12px;
-
-    border-radius: 10px;
-
-    border: 1px solid #ddd;
-
-    background: white;
-
-    cursor: pointer;
-
-    font-weight: 600;
-
-    transition: 0.2s;
+.style-option {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  padding: 13px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
 }
 
-.marks button:hover {
-    border-color: #6a60ec;
+.style-option.active {
+  border-color: #6366f1;
+  background: #eef2ff;
 }
 
-.marks button.selected {
-    background: #655bea;
-
-    color: white;
-
-    border-color: #655bea;
+.generate-btn {
+  width: 100%;
+  margin-top: 28px;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #4f46e5;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-
-/* CHECKBOX */
-
-.checkbox-label {
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    font-weight: 500;
-
-    cursor: pointer;
+.generate-btn:hover {
+  background: #4338ca;
 }
 
-.checkbox-label input {
-    width: 17px;
-    height: 17px;
+.status {
+  text-align: center;
+  margin-top: 12px;
+  color: #64748b;
 }
 
-
-/* GENERATE */
-
-.generate {
-    width: 100%;
-
-    margin-top: 25px;
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: linear-gradient(
-        90deg,
-        #655bea,
-        #a353e9
-    );
-
-    color: white;
-
-    font-family: "Poppins", sans-serif;
-
-    font-size: 16px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.2s;
+.result-section,
+.saved-section {
+  margin-top: 35px;
 }
 
-.generate:hover {
-    transform: translateY(-2px);
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-
-/* PREVIEW */
-
-.preview-card {
-    min-height: 720px;
+.save-btn {
+  border: none;
+  background: #16a34a;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.preview-title {
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-bottom: 20px;
+.close-btn {
+  border: none;
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.preview-title h2 {
-    margin-bottom: 4px;
+.hidden {
+  display: none;
 }
 
-#pageInfo {
-    color: #888;
-    font-size: 13px;
+.notebook {
+  background-color: #fffef8;
+  background-image:
+    linear-gradient(#dce8ff 1px, transparent 1px);
+  background-size: 100% 34px;
+
+  min-height: 900px;
+
+  padding: 55px 55px 55px 80px;
+
+  margin-bottom: 30px;
+
+  border-radius: 5px;
+
+  box-shadow:
+    0 5px 25px rgba(0,0,0,0.12);
+
+  position: relative;
 }
 
+.notebook::before {
+  content: "";
 
-/* PAPER CONTAINER */
+  position: absolute;
 
-#paperContainer {
-    display: flex;
+  left: 55px;
+  top: 0;
+  bottom: 0;
 
-    flex-direction: column;
+  width: 2px;
 
-    align-items: center;
-
-    gap: 30px;
-
-    padding: 10px;
+  background: #ffb3b3;
 }
-
-
-/* NOTEBOOK PAPER */
-
-.paper {
-    position: relative;
-
-    width: 100%;
-
-    max-width: 850px;
-
-    min-height: 700px;
-
-    padding: 55px 60px 60px 75px;
-
-    background-color: #fffef8;
-
-    /*
-       Notebook horizontal lines
-    */
-    background-image:
-        repeating-linear-gradient(
-            to bottom,
-            transparent 0px,
-            transparent 31px,
-            #c8d9ed 32px
-        );
-
-    border: 1px solid #dedede;
-
-    box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.13);
-}
-
-
-/*
-   Red notebook margin
-*/
-
-.paper::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    left: 58px;
-
-    width: 1.5px;
-
-    background: #e5aaaa;
-}
-
-
-/* HANDWRITING */
 
 .handwriting {
-    white-space: pre-wrap;
+  font-size: 25px;
+  line-height: 34px;
 
-    word-wrap: break-word;
+  white-space: pre-wrap;
 
-    font-size: 25px;
+  letter-spacing: 0.2px;
 
-    line-height: 32px;
-
-    color: #183b82;
-
-    position: relative;
-
-    z-index: 2;
+  position: relative;
 }
 
-
-/* TITLE */
-
-.hand-title {
-    position: relative;
-
-    z-index: 2;
-
-    font-size: 34px;
-
-    font-weight: 700;
-
-    margin-bottom: 16px;
-
-    text-decoration: underline;
-
-    line-height: 38px;
+.handwriting.blue {
+  color: #1455a0;
 }
 
-
-/* DIFFERENT HANDWRITINGS */
-
-.handwriting-neat {
-    font-family: "Kalam", cursive;
+.handwriting.black {
+  color: #111827;
 }
 
-.handwriting-natural {
-    font-family: "Patrick Hand", cursive;
+.saved-card {
+  background: white;
+  padding: 18px;
+  border-radius: 13px;
+  margin-bottom: 12px;
+  border: 1px solid #e5e7eb;
 }
 
-.handwriting-clean {
-    font-family: "Caveat", cursive;
+.saved-card h3 {
+  margin: 0 0 8px;
 }
 
-.handwriting-exam {
-    font-family: "Kalam", cursive;
-
-    font-size: 23px;
+.saved-card p {
+  color: #64748b;
 }
 
-.handwriting-cursive {
-    font-family: "Shadows Into Light", cursive;
-
-    font-size: 24px;
+.saved-actions {
+  display: flex;
+  gap: 10px;
 }
 
-
-/* BLACK INK */
-
-.ink-black .handwriting,
-.ink-black .hand-title {
-    color: #222222;
+.saved-actions button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-
-/* PAGE NUMBER */
-
-.page-number {
-    position: absolute;
-
-    bottom: 18px;
-
-    right: 25px;
-
-    font-family: "Caveat", cursive;
-
-    font-size: 20px;
-
-    color: #777;
+.view-btn {
+  background: #eef2ff;
+  color: #4338ca;
 }
 
-
-/* EMPTY STATE */
-
-.empty {
-    min-height: 580px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    color: #888;
-
-    padding: 30px;
+.delete-btn {
+  background: #fee2e2;
+  color: #b91c1c;
 }
-
-.empty-icon {
-    font-size: 65px;
-
-    margin-bottom: 15px;
-}
-
-.empty h3 {
-    color: #555;
-
-    margin-bottom: 8px;
-}
-
-.empty p {
-    max-width: 450px;
-}
-
-
-/* FOOTER */
 
 footer {
-    text-align: center;
-
-    padding: 25px;
-
-    color: #888;
-
-    font-size: 13px;
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
 }
 
+@media (max-width: 800px) {
 
-/* MOBILE */
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
 
-@media (max-width: 950px) {
+  .hero h1 {
+    font-size: 29px;
+  }
 
-    main {
-        grid-template-columns: 1fr;
-    }
+  .notebook {
+    padding-left: 55px;
+  }
 
-    .paper {
-        min-height: 650px;
+  .notebook::before {
+    left: 35px;
+  }
 
-        padding:
-            50px
-            35px
-            55px
-            65px;
-    }
-
-    .paper::before {
-        left: 48px;
-    }
 }
 
+@media (max-width: 500px) {
 
-@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-    main {
-        width: 96%;
+  .header {
+    padding: 0 15px;
+  }
 
-        margin-top: 20px;
-    }
+  .container {
+    padding: 25px 12px;
+  }
 
-    .input-card,
-    .preview-card {
-        padding: 20px;
-    }
+  .notebook {
+    padding: 40px 25px 40px 45px;
+  }
 
-    .paper {
-        padding:
-            45px
-            22px
-            55px
-            48px;
-    }
+  .notebook::before {
+    left: 28px;
+  }
 
-    .paper::before {
-        left: 34px;
-    }
+  .handwriting {
+    font-size: 21px;
+    line-height: 31px;
+  }
 
-    .handwriting {
-        font-size: 21px;
-
-        line-height: 30px;
-    }
-
-    .hand-title {
-        font-size: 28px;
-    }
 }
