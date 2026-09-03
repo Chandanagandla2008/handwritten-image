@@ -1,173 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>WriteMate - Handwritten Answers</title>
+  <title>WriteMate - AI Handwritten Answers</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Shadows+Into+Light&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Shadows+Into+Light&family=Indie+Flower&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-    <div class="logo">✍️ WriteMate</div>
-    <p>Turn your questions into beautiful handwritten answers</p>
-</header>
+  <header class="header">
+    <div class="logo">
+      ✍️ WriteMate
+    </div>
+
+    <button id="savedBtn" class="saved-btn">
+      📚 Saved Questions
+    </button>
+  </header>
 
 
-<main>
+  <main class="container">
 
-    <!-- INPUT SECTION -->
-    <section class="input-card">
+    <section class="hero">
+      <h1>Turn Questions Into Beautiful Handwritten Answers</h1>
 
-        <h2>📝 Create Your Answer</h2>
-
-        <label for="question">Question / Topic</label>
-
-        <textarea
-            id="question"
-            placeholder="Example: Explain photosynthesis..."
-        ></textarea>
+      <p>
+        Enter a question, choose marks, pages and handwriting style.
+        WriteMate creates a neat exam-style answer.
+      </p>
+    </section>
 
 
-        <label>Select Marks</label>
+    <section class="card">
 
-        <div class="marks">
+      <label class="label">
+        📝 Enter Your Question
+      </label>
 
-            <button onclick="selectMarks(2)" id="mark2">
-                2 Marks
-            </button>
+      <textarea
+        id="question"
+        placeholder="Example: Explain the casting process..."
+      ></textarea>
 
-            <button onclick="selectMarks(5)" id="mark5">
-                5 Marks
-            </button>
 
-            <button onclick="selectMarks(10)" id="mark10">
-                10 Marks
-            </button>
+      <div class="grid">
 
-            <button onclick="selectMarks(15)" id="mark15">
-                15 Marks
-            </button>
+        <div>
+          <label class="label">📚 Subject</label>
 
+          <select id="subject">
+            <option value="General">General</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+            <option value="English">English</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
 
-        <label for="subject">Subject</label>
+        <div>
+          <label class="label">🎯 Marks</label>
 
-        <select id="subject">
-
-            <option>Other</option>
-            <option>Mathematics</option>
-            <option>Physics</option>
-            <option>Chemistry</option>
-            <option>Biology</option>
-            <option>Computer Science</option>
-            <option>English</option>
-            <option>Mechanical Engineering</option>
-
-        </select>
+          <select id="marks">
+            <option value="2">2 Marks</option>
+            <option value="5" selected>5 Marks</option>
+            <option value="10">10 Marks</option>
+            <option value="15">15 Marks</option>
+          </select>
+        </div>
 
 
-        <label for="pageCount">Number of Pages</label>
+        <div>
+          <label class="label">📄 Number of Pages</label>
 
-        <select id="pageCount">
-
-            <option value="1">📄 1 Page</option>
-            <option value="2">📄 2 Pages</option>
-            <option value="3">📄 3 Pages</option>
-            <option value="4">📄 4 Pages</option>
-            <option value="5">📄 5 Pages</option>
-
-        </select>
-
-
-        <label for="writingStyle">Choose Handwriting</label>
-
-        <select id="writingStyle">
-
-            <option value="neat">✍️ Very Neat</option>
-            <option value="natural">✍️ Natural Student</option>
-            <option value="clean">✍️ Clean & Stylish</option>
-            <option value="exam">✍️ Simple Exam Writing</option>
-            <option value="cursive">✍️ Cursive Student</option>
-
-        </select>
+          <select id="pages">
+            <option value="1">1 Page</option>
+            <option value="2">2 Pages</option>
+            <option value="3">3 Pages</option>
+            <option value="4">4 Pages</option>
+            <option value="5">5 Pages</option>
+          </select>
+        </div>
 
 
-        <label for="inkColor">Ink Color</label>
+        <div>
+          <label class="label">🖊️ Ink</label>
 
-        <select id="inkColor">
+          <select id="ink">
+            <option value="blue">Blue</option>
+            <option value="black">Black</option>
+          </select>
+        </div>
 
-            <option value="blue">🔵 Blue Ink</option>
-            <option value="black">⚫ Black Ink</option>
-
-        </select>
-
-
-        <label class="checkbox-label">
-
-            <input type="checkbox" id="addDiagram" checked>
-
-            Add diagrams when useful
-
-        </label>
+      </div>
 
 
-        <button class="generate" onclick="generateAnswer()">
-            ✨ Generate Handwritten Answer
+      <label class="label">
+        ✒️ Choose Handwriting Style
+      </label>
+
+      <div class="styles">
+
+        <button class="style-option active" data-font="Caveat">
+          <span style="font-family:Caveat">My Handwriting</span>
         </button>
 
-    </section>
+        <button class="style-option" data-font="Kalam">
+          <span style="font-family:Kalam">Neat Handwriting</span>
+        </button>
+
+        <button class="style-option" data-font="Patrick Hand">
+          <span style="font-family:'Patrick Hand'">Simple Handwriting</span>
+        </button>
+
+        <button class="style-option" data-font="Shadows Into Light">
+          <span style="font-family:'Shadows Into Light'">Casual Handwriting</span>
+        </button>
+
+        <button class="style-option" data-font="Indie Flower">
+          <span style="font-family:'Indie Flower'">Student Handwriting</span>
+        </button>
+
+      </div>
 
 
-    <!-- OUTPUT SECTION -->
-    <section class="preview-card">
+      <button id="generateBtn" class="generate-btn">
+        ✨ Generate Handwritten Answer
+      </button>
 
-        <div class="preview-title">
-
-            <div>
-                <h2>📖 Your Handwritten Answer</h2>
-                <p id="pageInfo">No answer generated yet</p>
-            </div>
-
-        </div>
-
-
-        <div id="paperContainer">
-
-            <div class="empty">
-
-                <div class="empty-icon">✍️</div>
-
-                <h3>Your handwritten answer will appear here</h3>
-
-                <p>
-                    Enter your question, select marks and generate your answer.
-                </p>
-
-            </div>
-
-        </div>
+      <p id="status" class="status"></p>
 
     </section>
 
-</main>
+
+    <section id="resultSection" class="result-section hidden">
+
+      <div class="result-header">
+        <h2>📖 Your Handwritten Answer</h2>
+
+        <button id="saveBtn" class="save-btn">
+          💾 Save Question
+        </button>
+      </div>
+
+      <div id="pagesContainer"></div>
+
+    </section>
 
 
-<footer>
-    Made with ❤️ for students
-</footer>
+    <section id="savedSection" class="saved-section hidden">
+
+      <div class="result-header">
+        <h2>📚 Saved Questions</h2>
+
+        <button id="closeSavedBtn" class="close-btn">
+          ✕ Close
+        </button>
+      </div>
+
+      <div id="savedList"></div>
+
+    </section>
+
+  </main>
 
 
-<script src="script.js"></script>
+  <footer>
+    <p>WriteMate ✍️ — Learn • Write • Remember</p>
+  </footer>
+
+
+  <script src="script.js"></script>
 
 </body>
 </html>
