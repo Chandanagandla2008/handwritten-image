@@ -1,351 +1,550 @@
-let selectedMarks = 5;
+/*
+  IMPORTANT:
+  Change this URL after deploying your backend.
+
+  Example:
+  https://your-writemate-backend.onrender.com
+*/
+
+const API_URL = "https://YOUR-BACKEND-URL.onrender.com";
+
+
+let selectedFont = "Caveat";
+
+let currentAnswer = null;
 
 
 /* -----------------------------
-   MARK SELECTION
+   Handwriting style selection
 ----------------------------- */
 
-function selectMarks(marks) {
+document.querySelectorAll(".style-option").forEach(button => {
 
-    selectedMarks = marks;
+  button.addEventListener("click", () => {
 
-    document
-        .querySelectorAll(".marks button")
-        .forEach(button => {
-            button.classList.remove("selected");
-        });
+    document.querySelectorAll(".style-option")
+      .forEach(btn => btn.classList.remove("active"));
 
-    document
-        .getElementById("mark" + marks)
-        .classList.add("selected");
-}
+    button.classList.add("active");
+
+    selectedFont = button.dataset.font;
+
+  });
+
+});
 
 
 /* -----------------------------
-   GENERATE
+   Generate answer
 ----------------------------- */
 
-function generateAnswer() {
-
-    const question =
-        document.getElementById("question")
-        .value
-        .trim();
-
-    const subject =
-        document.getElementById("subject").value;
-
-    const pageCount =
-        parseInt(
-            document.getElementById("pageCount").value
-        );
-
-    const writingStyle =
-        document.getElementById("writingStyle").value;
-
-    const inkColor =
-        document.getElementById("inkColor").value;
-
-    const addDiagram =
-        document.getElementById("addDiagram").checked;
+document
+  .getElementById("generateBtn")
+  .addEventListener("click", generateAnswer);
 
 
-    if (!question) {
+async function generateAnswer() {
 
-        alert("Please enter a question or topic.");
+  const question =
+    document.getElementById("question").value.trim();
 
-        return;
-    }
+  const subject =
+    document.getElementById("subject").value;
 
+  const marks =
+    document.getElementById("marks").value;
 
-    /*
-       Demo answer.
+  const pages =
+    document.getElementById("pages").value;
 
-       Later this function can be connected
-       to a real AI backend.
-    */
+  const ink =
+    document.getElementById("ink").value;
 
-    let answer =
-        createAnswer(
-            question,
-            selectedMarks,
-            subject,
-            addDiagram
-        );
+  const status =
+    document.getElementById("status");
 
 
-    displayAnswer(
-        question,
-        answer,
-        pageCount,
-        writingStyle,
-        inkColor
+  if (!question) {
+
+    alert("Please enter a question.");
+
+    return;
+  }
+
+
+  status.textContent =
+    "✨ AI is preparing your answer...";
+
+
+  const button =
+    document.getElementById("generateBtn");
+
+  button.disabled = true;
+
+
+  try {
+
+    const response = await fetch(
+      `${API_URL}/api/generate`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          question,
+          subject,
+          marks,
+          pages
+        })
+      }
     );
+
+
+    if (!response.ok) {
+
+      throw new Error("Backend error");
+
+    }
+
+
+    const data = await response.json();
+
+
+    currentAnswer = {
+      question,
+      subject,
+      marks,
+      pages,
+      ink,
+      font: selectedFont,
+      answer: data.answer
+    };
+
+
+    showAnswer(currentAnswer);
+
+
+    status.textContent =
+      "✅ Answer generated successfully!";
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    status.textContent = "";
+
+    alert(
+      "Backend is not connected yet. Please check the backend URL."
+    );
+
+  }
+
+
+  button.disabled = false;
+
 }
 
 
 /* -----------------------------
-   ANSWER GENERATOR
+   Display handwritten pages
 ----------------------------- */
 
-function createAnswer(
-    question,
-    marks,
-    subject,
-    addDiagram
-) {
+function showAnswer(data) {
 
-    let answer = "";
+  const resultSection =
+    document.getElementById("resultSection");
 
+  const container =
+    document.getElementById("pagesContainer");
 
-    if (marks === 2) {
 
-        answer =
-`Definition:
+  container.innerHTML = "";
 
-${question} is an important concept in ${subject}.
 
-It mainly explains the basic idea and purpose of the topic.`;
+  const pageCount =
+    Number(data.pages);
 
-    }
 
+  const text =
+    data.answer;
 
-    else if (marks === 5) {
 
-        answer =
-`Introduction:
+  const chunks =
+    splitAnswerIntoPages(text, pageCount);
 
-${question}
 
-${question} is an important topic in ${subject}. It can be understood by studying its basic meaning and important features.
+  chunks.forEach((chunk, index) => {
 
-Main Points:
+    const page =
+      document.createElement("div");
 
-• It explains the fundamental concept clearly.
-• It has important characteristics and uses.
-• It is useful in practical applications.
-• Understanding this topic helps in studying advanced concepts.
+    page.className = "notebook";
 
-Conclusion:
 
-Thus, ${question} is an important concept in ${subject}.`;
+    const writing =
+      document.createElement("div");
 
-    }
+    writing.className =
+      `handwriting ${data.ink}`;
 
 
-    else if (marks === 10) {
+    writing.style.fontFamily =
+      `"${data.font}", cursive`;
 
-        answer =
-`Introduction:
 
-${question}
+    writing.textContent =
+      chunk;
 
-${question} is an important topic in ${subject}. A clear understanding of this concept is useful for both theoretical and practical applications.
 
-1. Basic Concept:
+    page.appendChild(writing);
 
-The basic idea of this topic can be understood by studying its definition, principles and important characteristics.
+    container.appendChild(page);
 
-2. Important Points:
+  });
 
-• It has several important characteristics.
-• It can be studied systematically.
-• It is useful in practical applications.
-• It helps in understanding related concepts.
 
-3. Explanation:
+  resultSection.classList.remove("hidden");
 
-The topic works according to certain basic principles. These principles help us understand the concept step-by-step.
+  window.scrollTo({
+    top: resultSection.offsetTop - 20,
+    behavior: "smooth"
+  });
 
-4. Applications:
-
-It can be applied in different practical situations depending on the subject.
-
-5. Advantages:
-
-• Improves conceptual understanding.
-• Useful for solving problems.
-• Has practical importance.
-• Helps in further learning.
-
-Conclusion:
-
-Therefore, ${question} is an important topic in ${subject} and its basic principles should be understood clearly.`;
-
-    }
-
-
-    else {
-
-        answer =
-`Introduction:
-
-${question}
-
-${question} is a detailed and important topic in ${subject}. A proper understanding of this topic is useful for theoretical knowledge as well as practical applications.
-
-1. Definition and Basic Concept:
-
-The fundamental idea of this topic can be understood by studying its definition, principles and important characteristics.
-
-2. Detailed Explanation:
-
-The concept can be explained systematically by considering its main principles and working process. Each part contributes to understanding the complete topic.
-
-3. Important Features:
-
-• It has several important characteristics.
-• It can be studied in a systematic manner.
-• It has useful practical applications.
-• It helps in understanding advanced concepts.
-
-4. Working / Process:
-
-The topic follows certain principles and steps. Understanding these steps makes the concept easier to remember and apply.
-
-5. Applications:
-
-The concept can be used in different academic and real-world situations.
-
-6. Advantages:
-
-• Improves conceptual understanding.
-• Useful for practical applications.
-• Helps in solving related problems.
-• Provides a strong foundation for advanced topics.
-
-7. Important Points:
-
-The major points should be remembered clearly and presented in a systematic manner in examinations.
-
-Conclusion:
-
-Thus, ${question} is an important topic in ${subject}. Understanding its definition, principles, features and applications helps students write a complete examination answer.`;
-
-    }
-
-
-    if (addDiagram) {
-
-        answer +=
-`
-
-[Simple diagram / flowchart can be added here when an AI backend is connected.]`;
-
-    }
-
-
-    return answer;
 }
 
 
 /* -----------------------------
-   DISPLAY MULTIPLE PAGES
+   Divide answer across pages
 ----------------------------- */
 
-function displayAnswer(
-    question,
-    answer,
-    pageCount,
-    writingStyle,
-    inkColor
-) {
+function splitAnswerIntoPages(text, pageCount) {
 
-    const container =
-        document.getElementById("paperContainer");
-
-    const pageInfo =
-        document.getElementById("pageInfo");
+  const words =
+    text.split(/\s+/);
 
 
-    container.innerHTML = "";
+  const wordsPerPage =
+    Math.ceil(words.length / pageCount);
 
 
-    pageInfo.textContent =
-        `${pageCount} page${pageCount > 1 ? "s" : ""} • ${selectedMarks} marks`;
+  const pages = [];
 
 
-    /*
-       Split answer into words
-       and distribute across pages.
-    */
+  for (
+    let i = 0;
+    i < pageCount;
+    i++
+  ) {
 
-    const words =
-        answer.split(/\s+/);
+    const start =
+      i * wordsPerPage;
 
-    const wordsPerPage =
-        Math.ceil(
-            words.length / pageCount
-        );
-
-
-    for (let i = 0; i < pageCount; i++) {
-
-        const start =
-            i * wordsPerPage;
-
-        const end =
-            start + wordsPerPage;
-
-        const pageText =
-            words
-                .slice(start, end)
-                .join(" ");
+    const end =
+      start + wordsPerPage;
 
 
-        const paper =
-            document.createElement("div");
-
-        paper.className =
-            "paper";
+    const pageText =
+      words.slice(start, end).join(" ");
 
 
-        if (inkColor === "black") {
+    if (pageText.trim()) {
 
-            paper.classList.add("ink-black");
+      pages.push(pageText);
 
+    }
+
+  }
+
+
+  return pages;
+
+}
+
+
+/* -----------------------------
+   Save question
+----------------------------- */
+
+document
+  .getElementById("saveBtn")
+  .addEventListener("click", saveQuestion);
+
+
+async function saveQuestion() {
+
+  if (!currentAnswer) {
+
+    alert("Generate an answer first.");
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        `${API_URL}/api/questions`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify(currentAnswer)
         }
+      );
 
 
-        paper.innerHTML = `
-
-            <div class="hand-title">
-                ${escapeHTML(question)}
-            </div>
-
-            <div class="handwriting handwriting-${writingStyle}">
-                ${escapeHTML(pageText)}
-            </div>
-
-            <div class="page-number">
-                Page ${i + 1} of ${pageCount}
-            </div>
-
-        `;
+    const data =
+      await response.json();
 
 
-        container.appendChild(paper);
+    if (!response.ok) {
+
+      throw new Error(
+        data.message || "Could not save"
+      );
+
     }
+
+
+    alert("✅ Question and answer saved permanently!");
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Could not save. Please check your backend connection."
+    );
+
+  }
+
 }
 
 
 /* -----------------------------
-   SECURITY
+   Open saved questions
 ----------------------------- */
 
-function escapeHTML(text) {
+document
+  .getElementById("savedBtn")
+  .addEventListener("click", loadSavedQuestions);
 
-    return text
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+document
+  .getElementById("closeSavedBtn")
+  .addEventListener("click", () => {
+
+    document
+      .getElementById("savedSection")
+      .classList.add("hidden");
+
+  });
+
+
+async function loadSavedQuestions() {
+
+  const section =
+    document.getElementById("savedSection");
+
+  const list =
+    document.getElementById("savedList");
+
+
+  section.classList.remove("hidden");
+
+  list.innerHTML =
+    "<p>Loading saved questions...</p>";
+
+
+  try {
+
+    const response =
+      await fetch(
+        `${API_URL}/api/questions`
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error("Could not load");
+
+    }
+
+
+    const questions =
+      await response.json();
+
+
+    list.innerHTML = "";
+
+
+    if (questions.length === 0) {
+
+      list.innerHTML =
+        "<p>No saved questions yet.</p>";
+
+      return;
+
+    }
+
+
+    questions.forEach(item => {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "saved-card";
+
+
+      const title =
+        document.createElement("h3");
+
+      title.textContent =
+        item.question;
+
+
+      const info =
+        document.createElement("p");
+
+      info.textContent =
+        `${item.subject} • ${item.marks} Marks • ${item.pages} Page(s)`;
+
+
+      const actions =
+        document.createElement("div");
+
+      actions.className =
+        "saved-actions";
+
+
+      const view =
+        document.createElement("button");
+
+      view.className =
+        "view-btn";
+
+      view.textContent =
+        "View Answer";
+
+
+      view.onclick =
+        () => viewSavedAnswer(item);
+
+
+      const del =
+        document.createElement("button");
+
+      del.className =
+        "delete-btn";
+
+      del.textContent =
+        "Delete";
+
+
+      del.onclick =
+        () => deleteQuestion(item.id);
+
+
+      actions.appendChild(view);
+
+      actions.appendChild(del);
+
+
+      card.appendChild(title);
+
+      card.appendChild(info);
+
+      card.appendChild(actions);
+
+
+      list.appendChild(card);
+
+    });
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    list.innerHTML =
+      "<p>Could not connect to backend.</p>";
+
+  }
+
 }
 
 
 /* -----------------------------
-   DEFAULT
+   View saved answer
 ----------------------------- */
 
-selectMarks(5);
+function viewSavedAnswer(item) {
+
+  currentAnswer = item;
+
+  showAnswer(item);
+
+  document
+    .getElementById("savedSection")
+    .classList.add("hidden");
+
+}
+
+
+/* -----------------------------
+   Delete saved question
+----------------------------- */
+
+async function deleteQuestion(id) {
+
+  const confirmDelete =
+    confirm(
+      "Delete this saved question?"
+    );
+
+
+  if (!confirmDelete) return;
+
+
+  try {
+
+    const response =
+      await fetch(
+        `${API_URL}/api/questions/${id}`,
+        {
+          method: "DELETE"
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error("Delete failed");
+
+    }
+
+
+    alert("Question deleted.");
+
+    loadSavedQuestions();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Could not delete question.");
+
+  }
+
+}
